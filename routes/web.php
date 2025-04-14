@@ -1,8 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 
-Route::get('/login', function () {
-    return view('auth.login');
+Route::get('/', function () {
+    return redirect('/login');
 });
 
+Auth::routes();
+
+Route::middleware(['authenticate'])->group(function () {
+    Route::get('/home', [DashboardController::class, 'index'])->name('home');
+});

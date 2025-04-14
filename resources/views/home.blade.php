@@ -16,7 +16,7 @@
                             <div class="card shadow-sm rounded">
                                 <div class="card-body">
                                     <h5>Total Produk</h5>
-                                    <p class="h3">{{ $totalProducts }}</p>
+                                    {{--  <p class="h3">{{ $totalProducts }}</p>  --}}
                                 </div>
                             </div>
                         </div>
@@ -24,7 +24,7 @@
                             <div class="card shadow-sm rounded">
                                 <div class="card-body">
                                     <h5>Total Pengguna</h5>
-                                    <p class="h3">{{ $totalUsers }}</p>
+                                    {{--  <p class="h3">{{ $totalUsers }}</p>  --}}
                                 </div>
                             </div>
                         </div>
