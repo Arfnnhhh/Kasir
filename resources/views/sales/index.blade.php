@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
         <div class="margin-content">
             <div class="container-sm">
                 <div class="section-header">
-                    <h1>Penjualan</h1>
+                    <h1>Sales</h1>
                 </div>
                 <div class="section-body">
                     <div class="table-responsive">
@@ -125,41 +125,50 @@ use Illuminate\Support\Facades\DB;
 
 @push('scripts')
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.detail-transaction-btn').forEach(button => {
-        button.addEventListener('click', function () {
-            const data = JSON.parse(this.getAttribute('data-transaction'));
+    document.addEventListener('DOMContentLoaded', function () {
+        // Function to manually format numbers as Indonesian Rupiah
+        function formatRupiah(amount) {
+            return 'Rp ' + amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
 
-            const transactionProducts = document.getElementById('transactionProducts');
-            transactionProducts.innerHTML = '';
+        document.querySelectorAll('.detail-transaction-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const data = JSON.parse(this.getAttribute('data-transaction'));
 
-            let products = typeof data.product_data === "string" ? JSON.parse(data.product_data) : data.product_data;
+                const transactionProducts = document.getElementById('transactionProducts');
+                transactionProducts.innerHTML = '';
 
-            let totalProductPrice = 0;
+                let products = typeof data.product_data === "string" ? JSON.parse(data.product_data) : data.product_data;
 
-            products.forEach((product, index) => {
-                const subtotal = product.price * product.quantity;
-                totalProductPrice += subtotal;
+                let totalProductPrice = 0;
 
-                transactionProducts.innerHTML += `
-                    <tr>
-                        <td>${index + 1}</td>
-                        <td>${product.name}</td>
-                        <td>Rp ${parseInt(product.price || 0).toLocaleString('id-ID')}</td>
-                        <td>${product.quantity}</td>
-                        <td>Rp ${subtotal.toLocaleString('id-ID')}</td>
-                    </tr>`;
+                products.forEach((product, index) => {
+                    const subtotal = product.price * product.quantity;
+                    totalProductPrice += subtotal;
+
+                    const formattedPrice = formatRupiah(product.price);
+                    const formattedSubtotal = formatRupiah(subtotal);
+
+                    transactionProducts.innerHTML += `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${product.name}</td>
+                            <td>${formattedPrice}</td>
+                            <td>${product.quantity}</td>
+                            <td>${formattedSubtotal}</td>
+                        </tr>`;
+                });
+
+                // Format total values using the custom formatRupiah function
+                document.getElementById('invoiceNumber').textContent = data.invoice_number || 'N/A';
+                document.getElementById('cashier').textContent = data.user_name || 'N/A';
+                document.getElementById('customerName').textContent = data.customer_name || 'N/A';
+                document.getElementById('totalAmount').textContent = formatRupiah(data.total_amount || 0);
+                document.getElementById('paymentAmount').textContent = formatRupiah(data.payment_amount || 0);
+                document.getElementById('changeAmount').textContent = formatRupiah(data.change_amount || 0);
+                document.getElementById('discountAmount').textContent = formatRupiah((totalProductPrice - (data.total_amount || 0)) || 0);
             });
-
-            document.getElementById('invoiceNumber').textContent = data.invoice_number || 'N/A';
-            document.getElementById('cashier').textContent = data.user_name || 'N/A';
-            document.getElementById('customerName').textContent = data.customer_name || 'N/A';
-            document.getElementById('totalAmount').textContent = (data.total_amount || 0).toLocaleString('id-ID');
-            document.getElementById('paymentAmount').textContent = (data.payment_amount || 0).toLocaleString('id-ID');
-            document.getElementById('changeAmount').textContent = (data.change_amount || 0).toLocaleString('id-ID');
-            document.getElementById('discountAmount').textContent = ((totalProductPrice - (data.total_amount || 0)) || 0).toLocaleString('id-ID');
         });
     });
-});
 </script>
 @endpush

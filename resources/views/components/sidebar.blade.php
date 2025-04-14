@@ -58,7 +58,7 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand text-center py-4">
-            <a href="{{ url('home') }}" class="text-white fw-bold">Cashier App</a>
+            <a href="{{ url('home') }}" class="text-white fw-bold">Arfanmart</a>
         </div>
         <ul class="sidebar-menu px-3">
             <li class="menu-header">Main</li>
@@ -93,7 +93,7 @@
                 </a>
             </li>
             <li class="{{ Request::is('members') ? 'active' : '' }}">
-                {{--  <a class="nav-link" href="{{ route('members.index') }}">  --}}
+                <a class="nav-link" href="{{ route('members.index') }}">
                     <i class="bi bi-people"></i>
                     <span class="sidebar-label">Member</span>
                 </a>
@@ -116,7 +116,7 @@
                 </a>
             </li>
             <li class="{{ Request::is('members') ? 'active' : '' }}">
-                {{--  <a class="nav-link" href="{{ route('members.index') }}">  --}}
+                <a class="nav-link" href="{{ route('members.index') }}">
                     <i class="bi bi-people-fill"></i>
                     <span class="sidebar-label">Member</span>
                 </a>

@@ -34,37 +34,37 @@
                                 @csrf
                                 <div class="form-group mb-3">
                                     <label for="name">Name</label>
-                                    <input type="text" class="form-control" name="name" id="name" 
+                                    <input type="text" class="form-control" name="name" id="name"
                                            placeholder="Enter Name" value="{{ old('name') }}" required>
                                 </div>
 
                                 <div class="form-group mb-3">
                                     <label for="phone_number">Phone Number</label>
-                                    <input type="text" class="form-control" name="phone_number" id="phone_number" 
+                                    <input type="text" class="form-control" name="phone_number" id="phone_number"
                                            placeholder="Enter Phone Number" value="{{ old('phone_number') }}">
                                 </div>
 
                                 <div class="form-group mb-3">
                                     <label for="email">Email</label>
-                                    <input type="email" class="form-control" name="email" id="email" 
+                                    <input type="email" class="form-control" name="email" id="email"
                                            placeholder="Enter Email" value="{{ old('email') }}">
                                 </div>
 
                                 <div class="form-group mb-3">
                                     <label for="address">Address</label>
-                                    <textarea class="form-control" name="address" id="address" rows="3" 
+                                    <textarea class="form-control" name="address" id="address" rows="3"
                                               placeholder="Enter Address">{{ old('address') }}</textarea>
                                 </div>
 
                                 <div class="form-group mb-3">
                                     <label for="date_of_birth">Date of Birth</label>
-                                    <input type="date" class="form-control" name="date_of_birth" id="date_of_birth" 
+                                    <input type="date" class="form-control" name="date_of_birth" id="date_of_birth"
                                            value="{{ old('date_of_birth') }}">
                                 </div>
 
                                 <div class="form-group mb-4">
                                     <label for="points">Points</label>
-                                    <input type="number" class="form-control" name="points" id="points" 
+                                    <input type="number" class="form-control" name="points" id="points"
                                            placeholder="Enter Points" value="{{ old('points', 0) }}" required>
                                 </div>
 

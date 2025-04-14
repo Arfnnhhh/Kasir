@@ -5,9 +5,11 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SalesController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\SalesExportController;
 use App\Http\Controllers\UserExportController;
 use App\Http\Controllers\ProductExportController;
+use App\Http\Controllers\MemberExportController;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\SalesExport;
 
@@ -24,6 +26,8 @@ Route::middleware(['authenticate'])->group(function () {
 
 
     Route::resource('products', ProductController::class)->except(['show']);
+
+    Route::resource('members', MemberController::class)->except(['show']);
 
 
     Route::get('/sales/{id}/invoice', [SalesController::class, 'showInvoice'])->name('sales.invoice');
@@ -42,11 +46,11 @@ Route::middleware(['authenticate'])->group(function () {
 
         Route::get('/user/export', [UserExportController::class, 'export'])->name('user.export');
         Route::get('/product/export', [ProductExportController::class, 'export'])->name('product.export');
+        Route::get('/member/export', [MemberExportController::class, 'export'])->name('member.export');
     });
 
     Route::middleware(['user'])->group(function () {
 
         Route::post('/confirm-sale', [SalesController::class, 'confirmationStore'])->name('sales.confirmationStore');
     });
-
 });

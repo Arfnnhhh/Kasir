@@ -91,7 +91,7 @@ class SalesController extends Controller
             $totalAmount -= $request->total_point;
             Member::where('id', $memberId)->decrement('points', $request->total_point);
         } else {
-            $addPoint = $totalAmount / 750;
+            $addPoint = $totalAmount * 0.01;
             Member::where('id', $memberId)->increment('points', $addPoint);
         }
 
@@ -134,7 +134,7 @@ class SalesController extends Controller
 
 
     public function showInvoice($id)
-    {   
+    {
         $sale = Sale::where('id', $id)->firstOrFail();
 
         $productData = $sale->product_data;

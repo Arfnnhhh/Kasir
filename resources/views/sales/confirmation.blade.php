@@ -12,18 +12,25 @@
                 </div>
 
                 @if (session('error'))
-                    <div class="alert alert-danger">
-                        {{ session('error') }}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fa fa-exclamation-circle"></i> {{ session('error') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                 @endif
 
                 @if ($errors->any())
-                    <div class="alert alert-danger">
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fa fa-exclamation-circle"></i> <strong>Oops!</strong> There were some errors with your input:
                         <ul class="mb-0">
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
                         </ul>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                 @endif
 
@@ -37,7 +44,6 @@
                                         <h5>Produk yang Dibeli</h5>
                                         <ul class="list-group">
                                             @foreach ($products as $key => $product)
-                                            dd)
                                                 <li class="list-group-item">
                                                     <strong>{{ $key + 1 . '. ' . $product->name}}</strong>
                                                     <br>Harga: Rp {{ number_format($product->price, 0, ',', '.') }}
@@ -92,7 +98,11 @@
 
                                 <div class="d-flex justify-content-between">
                                     <a href="{{ route('sales.create') }}" class="btn btn-secondary">Back</a>
-                                    <button type="submit" class="btn btn-primary">Tambah Penjualan</button>
+                                    <button type="submit" class="btn btn-primary" id="submit-btn" disabled>Tambah Penjualan</button>
+                                </div>
+
+                                <div id="payment-error-message" class="text-danger mt-3" style="display: none;">
+                                    <strong>Jumlah yang dibayar tidak cukup!</strong>
                                 </div>
                             </form>
                         </div>
@@ -129,10 +139,28 @@
             } else {
                 $(this).val('');
             }
+
+            let totalPay = parseInt(value) || 0;
+            let totalAmount = {{ $totalAmount }};
+            if (totalPay >= totalAmount) {
+                $('#submit-btn').prop('disabled', false);
+                $('#payment-error-message').hide();
+            } else {
+                $('#submit-btn').prop('disabled', true);
+                $('#payment-error-message').show();
+            }
         });
 
-        $('form').on('submit', function() {
-            let totalPay = $('#total_pay').val().replace(/\D/g, '');
+        $('form').on('submit', function(event) {
+            let totalPay = $('#total_pay_numeric').val().replace(/\D/g, '');
+            let totalAmount = {{ $totalAmount }};
+            if (parseInt(totalPay) < totalAmount) {
+                event.preventDefault();
+
+                $('#payment-error-message').show();
+                return false;
+            }
+
             $('#total_pay_numeric').val(totalPay);
         });
 

@@ -15,6 +15,8 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
+                                    <h1 class="fw-bold text-center"><strong>Arfanmart</strong></h1>
+                                    <hr>
                                     <h5>Nomor Invoice: <strong>{{ $invoiceNumber }}</strong></h5>
                                     <h5>Kasir: <strong>{{ $cashier }}</strong></h5>
                                     <h5>Informasi Pelanggan</h5>
