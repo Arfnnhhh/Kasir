@@ -31,6 +31,9 @@
                             <a href="{{ route('products.create') }}" class="btn btn-success ml-2 p-2">
                                 Create Product
                             </a>
+                            <a href="{{ route('product.export') }}" class="btn btn-success ml-2 p-2">
+                                Export Excel
+                            </a>
                             @endif
                         </div>
                     </div>

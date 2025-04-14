@@ -53,28 +53,34 @@ use Illuminate\Support\Facades\DB;
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($sales as $index => $item)
+                            @php
+                                $itemData = $item->toArray();
+                                $itemData['user_name'] = DB::table('users')->where('id', $item->user_id)->value('name');
+                            @endphp
                             <tr>
-                                @foreach ($sales as $index => $item)
                                 <td>{{ $sales->firstItem() + $index }}</td>
                                 <td>{{ $item->customer_name }}</td>
                                 <td>{{ $item->created_at }}</td>
                                 <td>{{ 'Rp ' . number_format($item->total_amount, 0, ',', '.') }}</td>
-                                <td>{{ DB::table('users')->where('id', $item->user_id)->value('name') }}</td>
+                                <td>{{ $itemData['user_name'] }}</td>
                                 <td class="text-center">
-                                    <button type="button" class="btn btn-primary detail-transaction-btn" data-toggle="modal" data-target="#transactionDetailModal" data-transaction='{{ json_encode($item) }}'>Lihat</button>
+                                    <button type="button" class="btn btn-primary detail-transaction-btn"
+                                            data-toggle="modal"
+                                            data-target="#transactionDetailModal"
+                                            data-transaction='@json($itemData)'>Lihat</button>
                                     <a href="{{ route('sales.invoice', $item->id) }}" class="btn btn-primary">Unduh Bukti</a>
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
-                        </table>
-                        <div class="d-flex justify-content-end mt-3">
-                            {{ $sales->links() }}
-                        </div>
+                    </table>
+                    <div class="d-flex justify-content-end mt-3">
+                        {{ $sales->links() }}
                     </div>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
     </div>
 </div>
 
@@ -90,6 +96,7 @@ use Illuminate\Support\Facades\DB;
             </div>
             <div class="modal-body">
                 <p><strong>Nomor Invoice:</strong> <span id="invoiceNumber"></span></p>
+                <p><strong>Kasir:</strong> <span id="cashier"></span></p>
                 <p><strong>Nama Pelanggan:</strong> <span id="customerName"></span></p>
                 <p><strong>Total Bayar:</strong> Rp <span id="paymentAmount"></span></p>
                 <p><strong>Total Harga:</strong> Rp <span id="totalAmount"></span></p>
@@ -145,11 +152,12 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             document.getElementById('invoiceNumber').textContent = data.invoice_number || 'N/A';
+            document.getElementById('cashier').textContent = data.user_name || 'N/A';
             document.getElementById('customerName').textContent = data.customer_name || 'N/A';
             document.getElementById('totalAmount').textContent = (data.total_amount || 0).toLocaleString('id-ID');
             document.getElementById('paymentAmount').textContent = (data.payment_amount || 0).toLocaleString('id-ID');
             document.getElementById('changeAmount').textContent = (data.change_amount || 0).toLocaleString('id-ID');
-            document.getElementById('discountAmount').textContent = (totalProductPrice - data.total_amount || 0).toLocaleString('id-ID');
+            document.getElementById('discountAmount').textContent = ((totalProductPrice - (data.total_amount || 0)) || 0).toLocaleString('id-ID');
         });
     });
 });

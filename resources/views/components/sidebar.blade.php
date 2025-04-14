@@ -79,7 +79,7 @@
                 </a>
             </li>
             <li class="{{ Request::is('sales') ? 'active' : '' }}">
-                {{--  <a class="nav-link" href="{{ route('sales.index') }}">  --}}
+                <a class="nav-link" href="{{ route('sales.index') }}">
                     <i class="bi bi-receipt"></i>
                     <span class="sidebar-label">Penjualan</span>
                 </a>
@@ -110,7 +110,7 @@
                 </a>
             </li>
             <li class="{{ Request::is('sales') ? 'active' : '' }}">
-                {{--  <a class="nav-link" href="{{ route('sales.index') }}">  --}}
+                <a class="nav-link" href="{{ route('sales.index') }}">
                     <i class="bi bi-cash-stack"></i>
                     <span class="sidebar-label">Penjualan</span>
                 </a>

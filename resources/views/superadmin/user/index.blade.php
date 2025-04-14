@@ -32,6 +32,9 @@
                             <a href="{{ route('user.create') }}" class="btn btn-success ml-2 p-2">
                                 Create User
                             </a>
+                            <a href="{{ route('user.export') }}" class="btn btn-success ml-2 p-2">
+                                Export Excel
+                            </a>
                             @endif
                         </div>
                         <table class="table table-bordered my-3" style="background-color: #f3f3f3">

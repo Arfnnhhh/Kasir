@@ -16,6 +16,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <h5>Nomor Invoice: <strong>{{ $invoiceNumber }}</strong></h5>
+                                    <h5>Kasir: <strong>{{ $cashier }}</strong></h5>
                                     <h5>Informasi Pelanggan</h5>
                                     <p><strong>Nama:</strong> {{ $memberName }}</p>
                                     <p><strong>Status:</strong> {{ $memberId ? 'Member' : 'Non-Member' }}</p>
