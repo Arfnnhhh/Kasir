@@ -71,7 +71,7 @@
             <div class="col-md-6 col-lg-5">
                 <div class="card p-4">
                     <div class="card-header text-center">
-                        <h4 class="mb-0">Login to Your Account</h4>
+                        <h4 class="mb-0">Masukan detail akun anda</h4>
                     </div>
 
                     <div class="card-body">

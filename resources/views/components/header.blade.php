@@ -1,3 +1,4 @@
+@auth
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
@@ -57,7 +58,7 @@
                 <div class="dropdown-title">
                     Selamat Datang, {{ substr(auth()->user()->name, 0, 10) }}
                 </div>
-                <a class="dropdown-item has-icon edit-profile" href="{{ route('#') }}">
+                <a class="dropdown-item has-icon edit-profile" href="{{ route('profile.edit') }}">
                     <i class="fa fa-user"></i> Edit Profile
                 </a>
                 <div class="dropdown-divider"></div>
@@ -72,3 +73,4 @@
         </li>
     </ul>
 </nav>
+@endauth
