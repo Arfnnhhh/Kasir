@@ -73,7 +73,7 @@
             @if (Auth::user()->role == 'superadmin')
             <li class="menu-header">Management</li>
             <li class="{{ Request::is('product') ? 'active' : '' }}">
-                {{--  <a class="nav-link" href="{{ route('products.index') }}">  --}}
+                <a class="nav-link" href="{{ route('products.index') }}">
                     <i class="bi bi-box-seam"></i>
                     <span class="sidebar-label">Produk</span>
                 </a>
@@ -104,7 +104,7 @@
             @if (Auth::user()->role == 'user')
             <li class="menu-header">Tools</li>
             <li class="{{ Request::is('product') ? 'active' : '' }}">
-                {{--  <a class="nav-link" href="{{ route('products.index') }}">  --}}
+                <a class="nav-link" href="{{ route('products.index') }}">
                     <i class="bi bi-box"></i>
                     <span class="sidebar-label">Produk</span>
                 </a>

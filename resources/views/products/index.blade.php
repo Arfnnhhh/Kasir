@@ -17,6 +17,8 @@
                     <div class="table-responsive">
                         <div class="row mb-3">
                             <div class="col-md-12 d-flex justify-content-between align-items-center">
+                                <form action="{{ route('products.index') }}" method="GET" class="d-flex"
+                                style="max-width: 100%%;">
                                 <div class="input-group">
                                     <input type="text" name="search" class="form-control rounded"
                                     placeholder="Search">
@@ -25,6 +27,11 @@
                                     </div>
                                 </div>
                             </form>
+                            @if(Auth::user()->role == 'superadmin')
+                            <a href="{{ route('products.create') }}" class="btn btn-success ml-2 p-2">
+                                Create Product
+                            </a>
+                            @endif
                         </div>
                     </div>
                     <table class="table table-bordered" style="background-color: #f3f3f3">
@@ -35,11 +42,45 @@
                                 <th>Gambar</th>
                                 <th>Harga</th>
                                 <th>Stok</th>
+                                @if(Auth::user()->role == 'superadmin')
+                                <th>Action</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($products as $index => $item)
+                            <tr>
+                                <td>{{ $products->firstItem() + $index }}</td>
+                                <td>{{ $item->name }}</td>
+                                <td class="text-center"><img src="{{ asset('storage/' . $item->image) }}"
+                                    width="100"></td>
+                                    <td>{{ 'Rp ' . number_format($item->price, 0, ',', '.') }}</td>
+                                    <td>{{ $item->quantity }}</td>
+                                    @if(Auth::user()->role == 'superadmin')
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-primary edit-stock-btn"
+                                        data-id="{{ $item->id }}" data-name="{{ $item->name }}"
+                                        data-quantity="{{ $item->quantity }}" data-toggle="modal"
+                                        data-target="#editStockModal">
+                                        Edit Stok
+                                    </button>
+                                    <a href="{{ route('products.edit', $item->id) }}"
+                                        class="btn btn-primary">Edit</a>
+                                        <form action="{{ route('products.destroy', $item->id) }}" method="POST"
+                                            class="delete-form" style="display: inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </td>
+                                    @endif
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
+                        <div class="d-flex justify-content-end mt-3">
+                            {{ $products->links() }}
+                        </div>
                     </div>
                 </div>
             </section>
@@ -78,4 +119,66 @@ aria-hidden="true">
 </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteForms = document.querySelectorAll('.delete-form');
+        deleteForms.forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "This action cannot be undone!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+
+        const editStockButtons = document.querySelectorAll('.edit-stock-btn');
+        const editStockForm = document.getElementById('editStockForm');
+        const quantityInput = document.getElementById('quantityInput');
+        const productName = document.getElementById('productName');
+
+        editStockButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const id = button.getAttribute('data-id');
+                const name = button.getAttribute('data-name');
+                const quantity = button.getAttribute('data-quantity');
+
+                productName.textContent = `Product: ${name}`;
+                quantityInput.value = quantity;
+
+                editStockForm.action = `/products/${id}/update-stock`;
+            });
+        });
+
+        @if (session('message'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: '{{ session('message') }}',
+            confirmButtonColor: '#3085d6'
+        });
+        @endif
+
+        @if (session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: '{{ session('error') }}',
+            confirmButtonColor: '#d33'
+        });
+        @endif
+    });
+    </script>
 @endpush

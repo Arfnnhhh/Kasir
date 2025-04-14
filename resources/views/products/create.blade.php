@@ -33,6 +33,7 @@
                 <div class="section-body">
                     <div class="card shadow-sm">
                         <div class="card-body">
+                            <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group mb-3">
                                     <label for="name">Nama Produk</label>
@@ -59,13 +60,16 @@
                                         <span id="file-name" class="ms-2 text-muted">Belum ada file dipilih</span>
                                         <input type="file" name="image" id="image" accept="image/*" style="display: none;" required>
                                     </div>
-                                
+
                                     <div class="mt-3">
                                         <img id="imagePreview" src="#" alt="Preview Gambar" style="display: none; max-width: 200px; max-height: 200px; object-fit: cover;" class="rounded shadow-sm border">
                                     </div>
                                 </div>
-                        
+
                                 <div class="d-flex justify-content-between">
+                                    <a href="{{ route('products.index') }}" class="btn btn-secondary">
+                                        Back
+                                    </a>
                                     <button type="submit" class="btn btn-success">
                                         Save Product
                                     </button>

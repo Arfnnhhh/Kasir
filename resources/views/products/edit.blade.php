@@ -40,6 +40,7 @@
                 <div class="section-body">
                     <div class="card shadow-sm">
                         <div class="card-body">
+                            <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
 
@@ -75,6 +76,9 @@
                                 </div>
 
                                 <div class="d-flex justify-content-between">
+                                    <a href="{{ route('products.index') }}" class="btn btn-secondary">
+                                        Back
+                                    </a>
                                     <button type="submit" class="btn btn-success">
                                         Update Product
                                     </button>
