@@ -45,8 +45,27 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            </tbody>                                
-                        </table>                           
+                                @foreach ($users as $index => $item)
+                                <tr>
+                                    <td>{{ $users->firstItem() + $index }}</td>
+                                    <td>{{ $item->name }}</td>
+                                    <td>{{ $item->email }}</td>
+                                    <td>{{ $item->role }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('user.edit', $item->id) }}" class="btn btn-primary">Edit</a>
+                                        <form action="{{ route('user.destroy', $item->id) }}" method="POST" class="delete-form" style="display: inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-center mt-3">
+                            {{ $users->links() }}
+                        </div>
                     </div>
                 </div>
             </section>
@@ -54,4 +73,46 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    {{--  document.querySelectorAll('form[action*="user"]').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "User will be permanently deleted!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit();
+                }
+            });
+        });
+    });  --}}
+
+    @if(session('message'))
+        Swal.fire({
+            title: 'Success!',
+            text: '{{ session('message') }}',
+            icon: 'success',
+            timer: 2000,
+            showConfirmButton: false,
+        });
+    @endif
+
+    @if(session('error'))
+        Swal.fire({
+            title: 'Error!',
+            text: '{{ session('error') }}',
+            icon: 'error',
+            timer: 3000,
+            showConfirmButton: false,
+        });
+    @endif
+</script>
 @endpush

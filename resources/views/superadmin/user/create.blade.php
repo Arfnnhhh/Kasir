@@ -30,6 +30,7 @@
                 <div class="section-body">
                     <div class="card shadow-sm">
                         <div class="card-body">
+                            <form action="{{ route('user.store') }}" method="POST">
                                 @csrf
 
                                 <div class="form-group mb-3">
@@ -57,6 +58,7 @@
                                 </div>
 
                                 <div class="d-flex justify-content-between">
+                                    <a href="{{ route('user.index') }}" class="btn btn-secondary">
                                         Back
                                     </a>
                                     <button type="submit" class="btn btn-primary">

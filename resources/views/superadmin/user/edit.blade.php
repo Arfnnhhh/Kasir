@@ -30,6 +30,7 @@
                 <div class="section-body">
                     <div class="card shadow-sm">
                         <div class="card-body">
+                            <form action="{{ route('user.update', $user->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
 
@@ -52,6 +53,7 @@
                                 </div>
 
                                 <div class="d-flex justify-content-between">
+                                    <a href="{{ route('user.index') }}" class="btn btn-secondary">
                                         Back
                                     </a>
                                     <button type="submit" class="btn btn-success">

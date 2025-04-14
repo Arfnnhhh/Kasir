@@ -68,15 +68,18 @@
                     <span class="sidebar-label">Dashboard</span>
                 </a>
             </li>
+
+            {{-- superadmin --}}
+            @if (Auth::user()->role == 'superadmin')
             <li class="menu-header">Management</li>
             <li class="{{ Request::is('product') ? 'active' : '' }}">
-                {{--  <a class="nav-link" href="{{ route('#') }}">  --}}
+                {{--  <a class="nav-link" href="{{ route('products.index') }}">  --}}
                     <i class="bi bi-box-seam"></i>
                     <span class="sidebar-label">Produk</span>
                 </a>
             </li>
             <li class="{{ Request::is('sales') ? 'active' : '' }}">
-                {{--  <a class="nav-link" href="{{ route('#') }}">  --}}
+                {{--  <a class="nav-link" href="{{ route('sales.index') }}">  --}}
                     <i class="bi bi-receipt"></i>
                     <span class="sidebar-label">Penjualan</span>
                 </a>
@@ -84,36 +87,41 @@
 
             <li class="menu-header">Users</li>
             <li class="{{ Request::is('user') ? 'active' : '' }}">
-                {{--  <a class="nav-link" href="{{ route('#') }}">  --}}
+                <a class="nav-link" href="{{ route('user.index') }}">
                     <i class="bi bi-person-gear"></i>
                     <span class="sidebar-label">User</span>
                 </a>
             </li>
             <li class="{{ Request::is('members') ? 'active' : '' }}">
-                {{--  <a class="nav-link" href="{{ route('#') }}">  --}}
+                {{--  <a class="nav-link" href="{{ route('members.index') }}">  --}}
                     <i class="bi bi-people"></i>
                     <span class="sidebar-label">Member</span>
                 </a>
             </li>
+            @endif
+
+            {{-- user --}}
+            @if (Auth::user()->role == 'user')
             <li class="menu-header">Tools</li>
             <li class="{{ Request::is('product') ? 'active' : '' }}">
-                {{--  <a class="nav-link" href="{{ route('#') }}">  --}}
+                {{--  <a class="nav-link" href="{{ route('products.index') }}">  --}}
                     <i class="bi bi-box"></i>
                     <span class="sidebar-label">Produk</span>
                 </a>
             </li>
             <li class="{{ Request::is('sales') ? 'active' : '' }}">
-                {{--  <a class="nav-link" href="{{ route('#') }}">  --}}
+                {{--  <a class="nav-link" href="{{ route('sales.index') }}">  --}}
                     <i class="bi bi-cash-stack"></i>
                     <span class="sidebar-label">Penjualan</span>
                 </a>
             </li>
             <li class="{{ Request::is('members') ? 'active' : '' }}">
-                {{--  <a class="nav-link" href="{{ route('#') }}">  --}}
+                {{--  <a class="nav-link" href="{{ route('members.index') }}">  --}}
                     <i class="bi bi-people-fill"></i>
                     <span class="sidebar-label">Member</span>
                 </a>
             </li>
+            @endif
         </ul>
     </aside>
 </div>
